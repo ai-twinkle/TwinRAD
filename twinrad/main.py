@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from autogen import GroupChat, GroupChatManager, LLMConfig, UserProxyAgent
 
 from configs.logging_config import setup_logging
@@ -36,7 +40,8 @@ user_proxy = UserProxyAgent(
     name="UserProxy",
     system_message="A human user who provides an initial prompt and guidance.",
     human_input_mode="NEVER",  # Set to "ALWAYS" for real human interaction
-    max_consecutive_auto_reply=0
+    max_consecutive_auto_reply=0,
+    code_execution_config={"use_docker": False}
 )
 evaluator_agent = EvaluatorAgent(llm_config=red_team_llm_config)
 gourmet_agent = GourmetAgent(llm_config=target_llm_config)
